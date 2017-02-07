@@ -53,7 +53,9 @@
                 Velocity(el, "transition.bounceRightOut", 500, done);
             },
             beforeAppear: function (el) {
-                el.style = 'display:none;';
+                $(el).attr('style','display:none;');
+                //严格模式下不可用改用jquery
+                // el.style = 'display:none;';
             },
             appear:function (el,done) {
                 Velocity(el, "transition.bounceRightIn", { duration: 800,delay:200}, done);
