@@ -9,7 +9,5 @@ IE9+,chorme,firefox is available.
 
 > [webpack]
 
-> [sui-mobile]
-
 > [es6-babel]
 
