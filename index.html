@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这里是测试页面</title>
+</head>
+<body>
+<div id="app">
+    <h1>Hello App!</h1>
+    <p  class="hh">
+        <!-- use router-link component for navigation. -->
+        <!-- specify the link by passing the `to` prop. -->
+        <!-- <router-link> will be rendered as an `<a>` tag by default -->
+        <router-link to="/home">Go to home</router-link>
+        <router-link to="/list">Go to list</router-link>
+        <router-link to="/detail">Go to detail</router-link>
+        <router-link to="/zcxzz">Go to zcx</router-link>
+    </p>
+    <!-- route outlet -->
+    <!-- component matched by the route will render here -->
+    <router-view></router-view>
+</div>
+    <script src="dist/build.js"></script>
+</body>
+</html>

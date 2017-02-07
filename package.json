@@ -1,0 +1,35 @@
+{
+  "name": "adminlte",
+  "version": "1.0.0",
+  "description": "the adminLTE power by vue.js,by developed by xixi on 2016/02/03",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline"
+  },
+  "keywords": [
+    "adminLTE"
+  ],
+  "author": "xixi",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-runtime": "^6.22.0",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.10.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue": "^2.1.10",
+    "vue-hot-reload-api": "^2.0.8",
+    "vue-html-loader": "^1.2.3",
+    "vue-loader": "^10.3.0",
+    "vue-router": "latest",
+    "vue-style-loader": "^2.0.0",
+    "webpack-merge": "^2.6.1",
+    "vue-resource": "latest"
+  }
+
+}
