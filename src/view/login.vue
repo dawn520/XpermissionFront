@@ -13,11 +13,8 @@
 <script>
     import loginBox from '../components/login-box.vue';
 
-    import Velocity from '../assets/js/velocity.min';
-    import velocity from '../assets/js/velocity.min';
-    import '../assets/js/velocity.ui';
-    import '../plugins/iCheck/icheck.min.js';
-    import '../plugins/iCheck/square/blue.css'
+
+
 
     export default {
         data:function () {
@@ -28,12 +25,14 @@
             }
         },
         created:function (){
-            $(function () {
+            this.$nextTick(function () {
                 $('body').attr('class','hold-transition login-page');
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
+                $(function () {
+                    $('input').iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue',
+                        increaseArea: '20%' // optional
+                    });
                 });
             });
         },

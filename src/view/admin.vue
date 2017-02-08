@@ -40,9 +40,7 @@
     import componentFooter from '../components/footer.vue';
     import componentRightAside from '../components/right-aside.vue';
 
-    import Velocity from '../assets/js/velocity.min';
-    import velocity from '../assets/js/velocity.min';
-    import '../assets/js/velocity.ui';
+
     import '../assets/js/app.js';
 
     export default {
@@ -53,8 +51,12 @@
             }
         },
         created:function (){
-            $('body').attr('class','hold-transition skin-blue sidebar-mini');
-            this.loopFix();
+            var that = this;
+            this.$nextTick(function () {
+                $('body').attr('class','hold-transition skin-blue sidebar-mini');
+                that.fix();
+            });
+
         },
         watch: {
             '$route': function () {
