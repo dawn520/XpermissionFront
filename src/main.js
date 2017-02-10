@@ -19,6 +19,10 @@ import '../plugins/iCheck/square/blue.css'
 
 //实例化路由
 var router=new VueRouter({routes});
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    next()
+});
 
 //创建和挂载根实例。
 var app = new Vue({
