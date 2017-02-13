@@ -36,6 +36,14 @@
                 });
             });
         },
+ //       beforeRouteEnter:function(to, from, next) {
+
+//            this.$http.get('/someUrl', [options]).then(function(response){
+//                // 响应成功回调
+//            }, function(response){
+//                // 响应错误回调
+//            });
+ //       },
         watch: {
             '$route': function () {
 

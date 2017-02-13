@@ -29,7 +29,8 @@
     "vue-router": "latest",
     "vue-style-loader": "^2.0.0",
     "webpack-merge": "^2.6.1",
-    "vue-resource": "latest"
+    "vue-resource": "latest",
+    "vuex": "latest"
   }
 
 }

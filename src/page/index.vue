@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
+                Page Header{{count}}
                 <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
@@ -21,3 +21,39 @@
         <!-- /.content -->
     </div>
 </template>
+<script>
+    import loginBox from '../components/login-box.vue';
+
+
+
+
+    export default {
+        data:function () {
+            return {
+                title: '首页',
+                smallTitle: '这里是首页',
+            }
+        },
+        computed: {
+            count:function () {
+                return this.$store.state.count;
+            }
+        },
+        created:function (){
+
+        },
+
+        watch: {
+            '$route': function () {
+
+            }
+        },
+        methods: {
+
+
+        },
+        components: {
+            loginBox,
+        }
+    }
+</script>

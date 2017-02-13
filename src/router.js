@@ -17,21 +17,24 @@ var routes = [
                 path: '',
                 component: index,
                 meta: {
-                    title: '开始 | AdminLTE 2'
+                    title: '开始 | Xpermission'
                 },
             },
             {
                 path: '/order',
                 component: order,
                 meta: {
-                    title: '订单 | AdminLTE 2'
+                    title: '订单 | Xpermission'
                 },
             }
         ]
     },
     {
         path: '/login',
-        component: login
+        component: login,
+        meta: {
+            title: '登录 | Xpermission'
+        },
     }
 
 ];
