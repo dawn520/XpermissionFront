@@ -31,20 +31,28 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    <li class="header">HEADER</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a href="#/"><i class="fa fa-link"></i> <span>首页</span></a></li>
-                    <li><a href="#/order"><i class="fa fa-link"></i> <span>订单</span></a></li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                    <li class="header">菜单</li>
+                    <li v-for="item in menu" v-bind:class="{'active':item.active,'treeview':item.children}">
+                        <router-link :to="item.path" v-if="item.children==null">
+                            <i :class="item.icon"></i>
+                            <span>{{item.name}}</span>
+                        </router-link>
+
+                        <a href="javascript:;" v-if="item.children!=null">
+                            <i :class="item.icon"></i>
+                            <span>{{item.name}}</span>
                             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Link in level 2</a></li>
-                            <li><a href="#">Link in level 2</a></li>
+                        <ul class="treeview-menu" v-if="item.children!=null">
+                            <li v-for="child in item.children" v-bind:class="{'active':child.active}">
+                                <router-link :to="child.path">
+                                    <i :class="child.icon"></i>{{child.name}}
+                                </router-link>
+                            </li>
                         </ul>
+
                     </li>
                 </ul>
                 <!-- /.sidebar-menu -->
@@ -52,3 +60,16 @@
             <!-- /.sidebar -->
         </div>
 </template>
+<script>
+    export default {
+        data:function () {
+            return {
+            }
+        },
+        computed: {
+            menu :function () {
+                return this.$store.state.menu;
+            }
+        }
+    }
+</script>

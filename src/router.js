@@ -5,7 +5,9 @@
 import admin from './view/admin.vue';
 import login from './view/login.vue';
 import index from './page/index.vue';
-import order from './page/order.vue';
+import permission from './page/permission.vue';
+
+
 
 //定义路由
 var routes = [
@@ -14,17 +16,31 @@ var routes = [
         component: admin,
         children: [
             {
-                path: '',
+                path: '/',
                 component: index,
                 meta: {
                     title: '开始 | Xpermission'
                 },
             },
             {
-                path: '/order',
-                component: order,
+                path: '/permissions',
+                component: permission,
                 meta: {
-                    title: '订单 | Xpermission'
+                    title: '权限 | Xpermission'
+                },
+            },
+            {
+                path: '/users',
+                component: permission,
+                meta: {
+                    title: '用户 | Xpermission'
+                },
+            },
+            {
+                path: '/roles',
+                component: permission,
+                meta: {
+                    title: '角色 | Xpermission'
                 },
             }
         ]

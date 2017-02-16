@@ -41,7 +41,7 @@
     import componentRightAside from '../components/right-aside.vue';
 
 
-    import '../assets/js/app.js';
+    //import '../assets/js/app.js';
 
     export default {
         data:function () {

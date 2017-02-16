@@ -501,6 +501,7 @@ function _init() {
     //Close the control sidebar
     close: function (sidebar, slide) {
       if (slide) {
+        console.log('close');
         sidebar.removeClass('control-sidebar-open');
       } else {
         $('body').removeClass('control-sidebar-open');
