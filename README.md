@@ -5,7 +5,11 @@ IE9+,chorme,firefox is available,others need to be checked.
 ##used
 > [vue]
 
+> [vuex]
+
 > [vue-router]
+
+> [vue-resource]
 
 > [webpack]
 
