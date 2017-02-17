@@ -1,23 +1,33 @@
 /**
  * Created by zhouchenxi on 2017/2/3.
  */
+
 //导入全局动画插件
 import Velocity from './assets/js/velocity.min';
 window.Velocity = window.velocity = Velocity;
 import './assets/js/velocity.ui';
 import './plugins/iCheck/icheck.min';
-import '../plugins/iCheck/square/blue.css'
+import './plugins/iCheck/square/blue.css'
 
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
+import VeeValidate from 'vee-validate';
 import {routes} from './router';
-
+import {menu} from './menu';
+import messagesZH from "./assets/js/zh_CN.js";
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueResource);
-
+Vue.use(VeeValidate, {
+    locale: "zh",
+    dictionary: {
+        zh: {
+            messages: messagesZH
+        }
+    }
+});
 //实例化路由
 const router=new VueRouter({routes});
 router.beforeEach((to, from, next) => {
@@ -29,40 +39,7 @@ router.beforeEach((to, from, next) => {
 const store = new Vuex.Store({
     state: {
         siteUrl: 'http://localhost',
-        menu: [
-            {
-                name: '首页',
-                path: '/',
-                icon: 'fa fa-link',
-                active: false
-            },
-            {
-                name: '用户权限',
-                path: '',
-                icon: 'fa fa-link',
-                active: false,
-                children: [
-                    {
-                        name: '用户',
-                        path: '/users',
-                        icon: 'fa fa-link',
-                        active: false,
-                    },
-                    {
-                        name: '权限',
-                        path: '/permissions',
-                        icon: 'fa fa-link',
-                        active: false,
-                    },
-                    {
-                        name: '角色',
-                        path: '/roles',
-                        icon: 'fa fa-link',
-                        active: false,
-                    }
-                ]
-            }
-        ]
+        menu: menu
     },
     mutations: {
         changeMenu:function (state,payload) {

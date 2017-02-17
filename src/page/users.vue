@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>权限<small>所有权限操作</small></h1>
+            <h1>用户<small>用户管理</small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -13,7 +13,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="button" class="btn btn-primary">添加权限</button>
+                    <button type="button" class="btn btn-primary">添加用户</button>
                 </div>
             </div>
             <div class="row">
@@ -28,10 +28,10 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>名称</th>
-                                    <th>显示的名称</th>
-                                    <th>描述</th>
-                                    <th>编辑</th>
+                                    <th>用户名</th>
+                                    <th>昵称</th>
+                                    <th>email</th>
+                                    <th>角色</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -40,10 +40,10 @@
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>名称</th>
-                                    <th>显示的名称</th>
-                                    <th>描述</th>
-                                    <th>编辑</th>
+                                    <th>用户名</th>
+                                    <th>昵称</th>
+                                    <th>email</th>
+                                    <th>角色</th>
                                 </tr>
                                 </tfoot>
                             </table>

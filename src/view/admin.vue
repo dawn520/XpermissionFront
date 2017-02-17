@@ -34,14 +34,14 @@
     <!-- ./wrapper -->
 </template>
 <script>
+    //import '../assets/js/app.js';
+
+
     import componentHeader from '../components/header.vue';
     import componentAside from '../components/aside.vue';
 
     import componentFooter from '../components/footer.vue';
     import componentRightAside from '../components/right-aside.vue';
-
-
-    //import '../assets/js/app.js';
 
     export default {
         data:function () {

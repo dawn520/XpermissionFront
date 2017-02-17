@@ -22,15 +22,15 @@
     "file-loader": "^0.10.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
+    "vee-validate": "^2.0.0-beta.22",
     "vue": "^2.1.10",
     "vue-hot-reload-api": "^2.0.8",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^10.3.0",
+    "vue-resource": "latest",
     "vue-router": "latest",
     "vue-style-loader": "^2.0.0",
-    "webpack-merge": "^2.6.1",
-    "vue-resource": "latest",
-    "vuex": "latest"
+    "vuex": "latest",
+    "webpack-merge": "^2.6.1"
   }
-
 }

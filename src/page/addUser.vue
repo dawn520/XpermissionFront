@@ -1,0 +1,166 @@
+<template>
+    <div>
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>添加用户<small></small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"> </h3>
+                        </div>
+                        <form class="form-horizontal"  style="max-width: 400px;margin: auto">
+                            <div class="box-body">
+                                <div class="alert alert-success alert-dismissible" v-if="returnSuccess=='yes'">
+                                    <button type="button" class="close" @click="error=false" aria-hidden="true">×</button>
+                                    <h4><i class="icon fa fa-check"></i> 提示!</h4>
+                                    {{returnMSG}}
+                                </div>
+                                <div class="alert alert-warning alert-dismissible" v-if="returnSuccess=='no'">
+                                    <h4><i class="icon fa fa-check"></i> 提示!</h4>
+                                    <button type="button" class="close" @click="error=false" aria-hidden="false">×</button>
+                                    {{returnMSG}}
+                                </div>
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('username') }">
+                                    <label class="control-label" v-show="errors.has('username')">
+                                        <i class="fa fa-times-circle-o"></i> {{ errors.first('username') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" v-model="username" name="username" v-validate="{ rules: { required: true,alpha_dash:true,min: 4,max:16 } }" data-vv-as="用户名" placeholder="用户名">
+                                    </div>
+                                </div>
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('name') }">
+                                    <label class="control-label" v-show="errors.has('name')">
+                                        <i class="fa fa-times-circle-o"></i> {{ errors.first('name') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+                                        <input type="text" class="form-control" v-model="name" name="name" v-validate="{ rules: { required: true,min: 2,max:10 } }" data-vv-as="昵称" placeholder="昵称">
+                                    </div>
+                                </div>
+                                <div class="form-group" v-bind:class="{ 'has-error': errors.has('email') }">
+                                    <label class="control-label"  v-show="errors.has('email')">
+                                        <i class="fa fa-times-circle-o"></i> {{ errors.first('email') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="text" class="form-control" v-model="email" name="email" v-validate="{ rules: { required: true, email: true } }" data-vv-as="邮箱" placeholder="E-mail">
+                                    </div>
+                                </div>
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('password') }">
+                                    <label class="control-label" v-show="errors.has('password')">
+                                        <i class="fa fa-times-circle-o"></i> {{ errors.first('password') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input type="password" class="form-control" v-model="password" name="password" v-validate="{ rules: { required: true,min: 8,max:20 } }" data-vv-as="密码" placeholder="密码">
+                                    </div>
+                                </div>
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('password_confirmation') }">
+                                    <label class="control-label" v-show="errors.has('password_confirmation')">
+                                        <i class="fa fa-times-circle-o"></i> {{ rpasswordE }}
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input type="password" class="form-control"  name="password_confirmation" v-validate data-vv-rules="required|confirmed:password" data-vv-as="重复密码" placeholder="重复密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-default">重置</button>
+                                <button type="button" class="btn btn-info pull-right" @click="add">添加</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+</template>
+<script>
+
+    export default {
+        data:function () {
+            return {
+                username: '',
+                name: '',
+                email: '',
+                password: '',
+                returnSuccess: '',
+                returnMSG: ''
+            }
+        },
+        computed: {
+            rpasswordE:function () {
+                var msg;
+                if(this.password.length<=0){
+                    msg = this.errors.first('rpassword');
+                }else{
+                    msg = "两次输入的密码不匹配！"
+                }
+                return msg;
+            }
+
+        },
+        created:function (){
+            this.$nextTick(function () {
+            });
+        },
+
+        watch: {
+            '$route': function () {
+
+            }
+        },
+        methods: {
+            add:function () {
+                this.$validator.validateAll().then(success => {
+                    if (! success) {
+                        // handle error
+                        return;
+                    }
+                    var param = {
+                        username:this.username,
+                        name: this.username,
+                        email:this.email,
+                        password:this.password,
+                        password_confirmation:this.password_confirmation
+                    };
+                    this.$http.post(this.$store.state.siteUrl+'/addUser', param).then(function(response){
+                        var data = response.data;
+                        if(data.code==21001){
+                            this.returnSuccess = 'yes';
+                            this.returnMSG = data.msg;
+                        }else{
+                            this.returnSuccess = 'no';
+                            this.returnMSG = data.msg;
+                        }
+                    }).catch(function(response) {
+                        this.returnSuccess = 'no';
+                        this.returnMSG = '系统出错，请稍后再试！';
+                    });
+                });
+
+            },
+
+
+        },
+        components: {
+
+        }
+    }
+</script>

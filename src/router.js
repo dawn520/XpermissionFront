@@ -6,6 +6,8 @@ import admin from './view/admin.vue';
 import login from './view/login.vue';
 import index from './page/index.vue';
 import permission from './page/permission.vue';
+import users from './page/users.vue';
+import addUser from './page/addUser.vue';
 
 
 
@@ -31,7 +33,7 @@ var routes = [
             },
             {
                 path: '/users',
-                component: permission,
+                component: users,
                 meta: {
                     title: '用户 | Xpermission'
                 },
@@ -42,7 +44,14 @@ var routes = [
                 meta: {
                     title: '角色 | Xpermission'
                 },
-            }
+            },
+            {
+                path: '/users/add',
+                component: addUser,
+                meta: {
+                    title: '添加用户 | Xpermission'
+                },
+            },
         ]
     },
     {
