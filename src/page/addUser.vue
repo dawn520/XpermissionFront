@@ -20,13 +20,13 @@
                         <form class="form-horizontal"  style="max-width: 400px;margin: auto">
                             <div class="box-body">
                                 <div class="alert alert-success alert-dismissible" v-if="returnSuccess=='yes'">
-                                    <button type="button" class="close" @click="error=false" aria-hidden="true">×</button>
+                                    <button type="button" class="close" @click="returnSuccess=no" aria-hidden="true">×</button>
                                     <h4><i class="icon fa fa-check"></i> 提示!</h4>
                                     {{returnMSG}}
                                 </div>
                                 <div class="alert alert-warning alert-dismissible" v-if="returnSuccess=='no'">
                                     <h4><i class="icon fa fa-check"></i> 提示!</h4>
-                                    <button type="button" class="close" @click="error=false" aria-hidden="false">×</button>
+                                    <button type="button" class="close" @click="returnSuccess=no" aria-hidden="false">×</button>
                                     {{returnMSG}}
                                 </div>
                                 <div class="form-group"  v-bind:class="{ 'has-error': errors.has('username') }">
@@ -71,7 +71,7 @@
                                     </label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control"  name="password_confirmation" v-validate data-vv-rules="required|confirmed:password" data-vv-as="重复密码" placeholder="重复密码">
+                                        <input type="password" class="form-control" v-model="password_confirmation"  name="password_confirmation" v-validate data-vv-rules="required|confirmed:password" data-vv-as="重复密码" placeholder="重复密码">
                                     </div>
                                 </div>
                             </div>
@@ -100,6 +100,7 @@
                 name: '',
                 email: '',
                 password: '',
+                password_confirmation: '',
                 returnSuccess: '',
                 returnMSG: ''
             }
@@ -108,7 +109,7 @@
             rpasswordE:function () {
                 var msg;
                 if(this.password.length<=0){
-                    msg = this.errors.first('rpassword');
+                    msg = this.errors.first('password_confirmation');
                 }else{
                     msg = "两次输入的密码不匹配！"
                 }
@@ -134,11 +135,11 @@
                         return;
                     }
                     var param = {
-                        username:this.username,
-                        name: this.username,
-                        email:this.email,
-                        password:this.password,
-                        password_confirmation:this.password_confirmation
+                        username             : this.username,
+                        name                 : this.name,
+                        email                : this.email,
+                        password             : this.password,
+                        password_confirmation: this.password_confirmation
                     };
                     this.$http.post(this.$store.state.siteUrl+'/addUser', param).then(function(response){
                         var data = response.data;
@@ -148,13 +149,15 @@
                         }else{
                             this.returnSuccess = 'no';
                             this.returnMSG = data.msg;
+                            for(var key in data.msg){
+                                this.errors.errors.unshift({field:key,msg:data.msg[key][0],scope:"__global__"})
+                            }
                         }
                     }).catch(function(response) {
                         this.returnSuccess = 'no';
                         this.returnMSG = '系统出错，请稍后再试！';
                     });
                 });
-
             },
 
 
