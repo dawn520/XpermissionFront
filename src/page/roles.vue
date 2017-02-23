@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>用户<small>用户管理</small></h1>
+            <h1>角色<small>角色管理</small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -13,8 +13,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
-                    <router-link to="users/add">
-                        <button type="button" class="btn btn-primary">添加用户</button>
+                    <router-link to="roles/add">
+                        <button type="button" class="btn btn-primary">添加角色</button>
                     </router-link>
                 </div>
             </div>
@@ -26,13 +26,13 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="permissionTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>用户名</th>
-                                    <th>昵称</th>
-                                    <th>email</th>
+                                    <th>角色名</th>
+                                    <th>角色显示名称</th>
+                                    <th>描述</th>
                                     <th>创建时间</th>
                                     <th>修改时间</th>
                                 </tr>
@@ -68,13 +68,13 @@
         created:function (){
             var that = this ;
             this.$nextTick(function () {
-                $("#example1").dataTable({
+                $("#permissionTable").dataTable({
                     "bStateSave": true,
                     "autoWidth": false,
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
-                        'url':that.$store.state.siteUrl+'/userList',
+                        'url':that.$store.state.siteUrl+'/roleList',
                         'type':'get',
                         'dataType':'json',
                        // 'dataSrc':function (data) {
@@ -84,9 +84,9 @@
 
                     "columns": [
                         { "data": "id"},
-                        { "data": "username","orderable": true},
-                        { "data": "name","orderable": false},
-                        { "data": "email","orderable": false},
+                        { "data": "name","orderable": true},
+                        { "data": "display_name","orderable": false},
+                        { "data": "description","orderable": false},
                         { "data": "created_at"},
                         { "data": "updated_at"}
                     ],

@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>添加用户<small></small></h1>
+            <h1>添加权限<small></small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -30,18 +30,6 @@
                                     </div>
                                 </transition>
 
-                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('username') }">
-                                    <transition enter-active-class="animated shake"
-                                                leave-active-class="xx">
-                                        <label class="control-label" v-show="errors.has('username')">
-                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('username') }}
-                                        </label>
-                                    </transition>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control" v-model="username" name="username" v-validate="{ rules: { required: true,alpha_dash:true,min: 4,max:16 } }" data-vv-as="用户名" placeholder="用户名">
-                                    </div>
-                                </div>
                                 <div class="form-group"  v-bind:class="{ 'has-error': errors.has('name') }">
                                     <transition enter-active-class="animated shake"
                                                 leave-active-class="xx">
@@ -50,46 +38,35 @@
                                         </label>
                                     </transition>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                                        <input type="text" class="form-control" v-model="name" name="name" v-validate="{ rules: { required: true,min: 2,max:10 } }" data-vv-as="昵称" placeholder="昵称">
+                                        <span class="input-group-addon"><i class="fa fa-font"></i></span>
+                                        <input type="text" class="form-control" v-model="name" name="name" v-validate="{ rules: { required: true,alpha_dash:true,min: 4,max:16 } }" data-vv-as="权限名" placeholder="权限名">
                                     </div>
                                 </div>
-                                <div class="form-group" v-bind:class="{ 'has-error': errors.has('email') }">
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('displayName') }">
                                     <transition enter-active-class="animated shake"
                                                 leave-active-class="xx">
-                                        <label class="control-label" v-show="errors.has('email')">
-                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('email') }}
+                                        <label class="control-label" v-show="errors.has('displayName')">
+                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('displayName') }}
                                         </label>
                                     </transition>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="text" class="form-control" v-model="email" name="email" v-validate="{ rules: { required: true, email: true } }" data-vv-as="邮箱" placeholder="E-mail">
+                                        <span class="input-group-addon"><i class="fa fa-text-height"></i></span>
+                                        <input type="text" class="form-control" v-model="displayName" name="displayName" v-validate="{ rules: { required: true,min: 2,max:16 } }" data-vv-as="权限显示标题" placeholder="权限显示标题">
                                     </div>
                                 </div>
-                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('password') }">
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('description') }">
                                     <transition enter-active-class="animated shake"
                                                 leave-active-class="xx">
-                                        <label class="control-label" v-show="errors.has('password')">
-                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('password') }}
+                                        <label class="control-label" v-show="errors.has('description')">
+                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('description') }}
                                         </label>
                                     </transition>
                                     <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control" v-model="password" name="password" v-validate="{ rules: { required: true,min: 8,max:20 } }" data-vv-as="密码" placeholder="密码">
+                                        <span class="input-group-addon"><i class="fa fa-align-left"></i></span>
+                                        <textarea type="text" class="form-control" v-model="description" name="description" v-validate="{ rules: {max:40 } }" data-vv-as="描述" placeholder="描述"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('password_confirmation') }">
-                                    <transition enter-active-class="animated shake"
-                                                leave-active-class="xx">
-                                        <label class="control-label" v-show="errors.has('password_confirmation')">
-                                            <i class="fa fa-times-circle-o"></i> {{ rpasswordE }}
-                                        </label>
-                                    </transition>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control" v-model="password_confirmation"  name="password_confirmation" v-validate data-vv-rules="required|confirmed:password" data-vv-as="重复密码" placeholder="重复密码">
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -111,26 +88,14 @@
     export default {
         data:function () {
             return {
-                username: '',
                 name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
+                displayName: '',
+                description:'',
                 returnSuccess: '',
                 returnMSG: ''
             }
         },
         computed: {
-            rpasswordE:function () {
-                var msg;
-                if(this.password.length<=0){
-                    msg = this.errors.first('password_confirmation');
-                }else{
-                    msg = "两次输入的密码不匹配！"
-                }
-                return msg;
-            }
-
         },
         created:function (){
             this.$nextTick(function () {
@@ -150,13 +115,11 @@
                         return;
                     }
                     var param = {
-                        username             : this.username,
-                        name                 : this.name,
-                        email                : this.email,
-                        password             : this.password,
-                        password_confirmation: this.password_confirmation
+                        name        : this.name,
+                        displayName : this.displayName,
+                        description : this.description,
                     };
-                    this.$http.post(this.$store.state.siteUrl+'/addUser', param).then(function(response){
+                    this.$http.post(this.$store.state.siteUrl+'/addPermission', param).then(function(response){
                         var data = response.data;
                         var that = this;
                         if(data.code==20000){
@@ -181,11 +144,9 @@
                 });
             },
             resetting:function () {
-                this.username = '';
                 this.name = '';
-                this.email = '';
-                this.password = '';
-                this.password_confirmation = '';
+                this.displayName = '';
+                this.description = '';
             }
 
 

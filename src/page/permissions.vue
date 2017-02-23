@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>权限<small>所有权限操作</small></h1>
+            <h1>权限<small>权限管理</small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -13,39 +13,33 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="button" class="btn btn-primary">添加权限</button>
+                    <router-link to="permissions/add">
+                        <button type="button" class="btn btn-primary">添加权限</button>
+                    </router-link>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Data Table With Full Features</h3>
+                           <!-- <h3 class="box-title"></h3>-->
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="permissionTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>名称</th>
-                                    <th>显示的名称</th>
+                                    <th>权限名</th>
+                                    <th>权限显示标题</th>
                                     <th>描述</th>
-                                    <th>编辑</th>
+                                    <th>创建时间</th>
+                                    <th>修改时间</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>名称</th>
-                                    <th>显示的名称</th>
-                                    <th>描述</th>
-                                    <th>编辑</th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                         <!-- /.box-body -->
@@ -72,71 +66,58 @@
 
         },
         created:function (){
+            var that = this ;
             this.$nextTick(function () {
-                $("#example1").dataTable({
-
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-
-
+                $("#permissionTable").dataTable({
+                    "bStateSave": true,
                     "autoWidth": false,
-
                     "processing": true,
-
-
+                    "serverSide": true,
                     "ajax": {
-                        url:module + "/Form/load_form",//你对数据库的操作路径
-
-                        type:'post',
-                        dataType:'json',
-                        data:  {                     //要传递的数据
-
-                            zhuanye: function() {
-                                return $("#zhuanye").val();
-                            }
-                        },
+                        'url':that.$store.state.siteUrl+'/permissionList',
+                        'type':'get',
+                        'dataType':'json',
+                       // 'dataSrc':function (data) {
+                            //return data.data.data;
+                       // }
                     },
 
                     "columns": [
-                        { "data": "checkbox"},
-                        { "data": "cpqx"},
-                        { "data": "bj"},
-                        { "data": "xh"},
-                        { "data": "xm"},
-                        { "data": "jdf"},
-                        { "data": "jdfmc"},
-                        { "data": "zf"},
-                        { "data": "mc"},
-                        { "data": "caozuo"}
+                        { "data": "id"},
+                        { "data": "name","orderable": true},
+                        { "data": "display_name","orderable": false},
+                        { "data": "description","orderable": false},
+                        { "data": "created_at"},
+                        { "data": "updated_at"}
                     ],
 
                     "lengthMenu": [
-                        [5, 15, 20, -1],
-                        [5, 15, 20, "All"] // change per page values here
+                        [5, 10, 20, -1],
+                        [5, 10, 20, "All"] // change per page values here
 
                     ],
                     // set the initial value
-
-                    "pageLength": 10,
-                    "pagingType": "bootstrap_full_number",
-                    "columnDefs": [{  // set default column settings
-
-                        'orderable': false,
-                        'targets': [0]
-                    }, {
-                        "searchable": false,
-                        "targets": [0]
-                    }],
-                    // "scrollX": true,
-
+                   // "displayLength": 5,
+                    "pageLength": 5,
+                   // "pagingType": "bootstrap_full_number",
+//                    "columnDefs": [{  // set default column settings
+//                        'orderable': false,
+//                        'targets': [0]
+//                    }, {
+//                        "searchable": false,
+//                        "targets": [0]
+//                    }],
+//                    // "scrollX": true,
+//
                     "order": [
-                        [4, "asc"]
+                        [1, "asc"]
                     ], // set first column as a default sort by asc
-
-                    "stripeClasses":
-                            ['gradeX odd', '"gradeX even"']
-                    ,
+//
+//                    "stripeClasses":
+//                            ['gradeX odd', '"gradeX even"']
+//                    ,
                     "language": {
-                        "sProcessing": '<div align="center" id="showtable"><img src="'+siteurl+'/Public/assets/global/img/ajax-loading.gif" />处理中……</div>',
+                        "sProcessing": '处理中……',
                         "sLengthMenu": "显示 _MENU_ 项结果",
                         "sZeroRecords": "没有匹配结果",
                         "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
@@ -145,7 +126,7 @@
                         "sInfoPostFix": "",
                         "sSearch": "搜索:",
                         "sUrl": "",
-                        "sEmptyTable": "表中数据为空!请在上面的“学院”和“专业”中选择一个来查看综合素质表格列表",
+                        "sEmptyTable": "表中数据为空!",
                         "sLoadingRecords": "载入中...",
                         "sInfoThousands": ",",
                         "oPaginate": {
@@ -160,19 +141,6 @@
                         }
                     },
 
-                });
-
-
-
-
-
-                $('#example2').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "searching": false,
-                        "ordering": true,
-                        "info": true,
-                        "autoWidth": false
                 });
             });
         },

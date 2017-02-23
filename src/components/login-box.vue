@@ -6,22 +6,31 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">登录</p>
-            <div class="alert alert-warning alert-dismissible" v-if="error">
-                <button type="button" class="close" @click="error=false" aria-hidden="false">×</button>
-                {{errorMSG}}
-            </div>
+            <transition enter-active-class="animated tada"
+                        leave-active-class="animated bounceOutRight">
+                <div class="alert alert-warning alert-dismissible" v-if="error">
+                    <button type="button" class="close" @click="error=false" aria-hidden="false">×</button>
+                    {{errorMSG}}
+                </div>
+            </transition>
             <form action="#" method="post">
                 <div class="form-group has-feedback" v-bind:class="{ 'has-error': usernameError }">
-                    <label class="control-label" v-if="usernameError">
-                        <i class="fa fa-times-circle-o"></i> 用户名不能为空！
-                    </label>
+                    <transition enter-active-class="animated shake"
+                                leave-active-class="animated fadeOutDown">
+                        <label class="control-label" v-if="usernameError">
+                            <i class="fa fa-times-circle-o"></i> 用户名不能为空！
+                        </label>
+                    </transition>
                     <input type="email" class="form-control" v-model="username" placeholder="用户名">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback" v-bind:class="{ 'has-error': passwordError }">
-                    <label class="control-label" v-if="passwordError">
-                        <i class="fa fa-times-circle-o"></i> 密码不能为空！
-                    </label>
+                    <transition enter-active-class="animated shake"
+                                leave-active-class="animated fadeOutDown">
+                        <label class="control-label" v-if="passwordError">
+                            <i class="fa fa-times-circle-o"></i> 密码不能为空！
+                        </label>
+                    </transition>
                     <input type="password" class="form-control" v-model="password" placeholder="密码">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>

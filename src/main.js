@@ -8,6 +8,7 @@ window.Velocity = window.velocity = Velocity;
 import './assets/js/velocity.ui';
 import './plugins/iCheck/icheck.min';
 import './plugins/iCheck/square/blue.css'
+import "./assets/css/animate.css";
 
 import Vue from 'vue';
 import Vuex from 'vuex';

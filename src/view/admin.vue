@@ -137,7 +137,6 @@
     }
 </script>
 <style>
-    @import "../assets/css/animate.css";
     .custom-appear-class{
         display: none;
     }
