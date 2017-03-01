@@ -5,12 +5,14 @@
 import admin from './view/admin.vue';
 import login from './view/login.vue';
 import index from './page/index.vue';
+import group from './page/group.vue';
 import permissions from './page/permissions.vue';
 import roles from './page/roles.vue';
 import users from './page/users.vue';
 import addUser from './page/addUser.vue';
 import addRole from './page/addRole.vue';
 import addPermission from './page/addPermission.vue';
+import addGroup from './page/addGroup.vue';
 
 
 
@@ -42,6 +44,20 @@ var routes = [
                 },
             },
             {
+                path: '/group',
+                component: group,
+                meta: {
+                    title: '权限组 | Xpermission'
+                },
+            },
+            {
+                path: '/group/add',
+                component: addGroup,
+                meta: {
+                    title: '添加组 | Xpermission'
+                },
+            },
+            {
                 path: '/roles',
                 component: roles,
                 meta: {
@@ -67,6 +83,13 @@ var routes = [
                 component: addPermission,
                 meta: {
                     title: '添加权限 | Xpermission'
+                },
+            },
+            {
+                path: '/user/edit/:id',
+                component: addUser,
+                meta: {
+                    title: '修改用户 | Xpermission'
                 },
             },
         ]

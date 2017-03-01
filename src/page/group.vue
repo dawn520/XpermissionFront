@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>用户<small>用户管理</small></h1>
+            <h1>权限组<small>组管理</small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -13,8 +13,8 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
-                    <router-link to="users/add">
-                        <button type="button" class="btn btn-primary">添加用户</button>
+                    <router-link to="group/add">
+                        <button type="button" class="btn btn-primary">添加组</button>
                     </router-link>
                 </div>
             </div>
@@ -22,11 +22,24 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <!-- <h3 class="box-title"></h3>-->
+                           <!-- <h3 class="box-title"></h3>-->
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="permissionTable" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>组名</th>
+                                    <th>组显示标题</th>
+                                    <th>描述</th>
+                                    <th>创建时间</th>
+                                    <th>修改时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </div>
                         <!-- /.box-body -->
@@ -55,27 +68,27 @@
         created:function (){
             var that = this ;
             this.$nextTick(function () {
-                $("#example1").dataTable({
+                $("#permissionTable").dataTable({
                     "bStateSave": true,
                     "autoWidth": false,
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
-                        'url':that.$store.state.siteUrl+'/userList',
+                        'url':that.$store.state.siteUrl+'/groupList',
                         'type':'get',
                         'dataType':'json',
-                        // 'dataSrc':function (data) {
-                        //return data.data.data;
-                        // }
+                       // 'dataSrc':function (data) {
+                            //return data.data.data;
+                       // }
                     },
 
                     "columns": [
-                        { "title":'ID',"data": "id"},
-                        { "title":'用户名',"data": "username","orderable": true},
-                        { "title":'昵称',"data": "name","orderable": false},
-                        { "title":'email',"data": "email","orderable": false},
-                        { "title":'创建时间',"data": "created_at"},
-                        { "title":'更新时间',"data": "updated_at"}
+                        { "data": "id"},
+                        { "data": "name","orderable": true},
+                        { "data": "display_name","orderable": false},
+                        { "data": "description","orderable": false},
+                        { "data": "created_at"},
+                        { "data": "updated_at"}
                     ],
 
                     "lengthMenu": [
@@ -84,9 +97,9 @@
 
                     ],
                     // set the initial value
-                    // "displayLength": 5,
+                   // "displayLength": 5,
                     "pageLength": 5,
-                    // "pagingType": "bootstrap_full_number",
+                   // "pagingType": "bootstrap_full_number",
 //                    "columnDefs": [{  // set default column settings
 //                        'orderable': false,
 //                        'targets': [0]

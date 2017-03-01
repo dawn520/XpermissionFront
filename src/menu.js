@@ -22,6 +22,12 @@ var menu =  [
                 active: false,
             },
             {
+                name: '权限组',
+                path: '/group',
+                icon: 'fa fa-link',
+                active: false,
+            },
+            {
                 name: '权限',
                 path: '/permissions',
                 icon: 'fa fa-link',

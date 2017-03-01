@@ -66,6 +66,17 @@
                                         <textarea type="text" class="form-control" v-model="description" name="description" v-validate="{ rules: {max:40 } }" data-vv-as="描述" placeholder="描述"></textarea>
                                     </div>
                                 </div>
+                                <div class="form-group" v-bind:class="{ 'has-error': errors.has('groupId') }">
+                                    <transition enter-active-class="animated shake"
+                                                leave-active-class="xx">
+                                        <label class="control-label" v-show="errors.has('groupId')">
+                                            <i class="fa fa-times-circle-o"></i> {{ errors.first('groupId') }}
+                                        </label>
+                                    </transition>
+                                    <select class="form-control select2" style="width: 100%;" v-model="groupId" name="groupId" v-validate="{ rules: {required: true } }" data-vv-as="组">
+                                        <option></option>
+                                    </select>
+                                </div>
 
                             </div>
                             <!-- /.box-body -->
@@ -91,14 +102,38 @@
                 name: '',
                 displayName: '',
                 description:'',
+                groupId : '',
                 returnSuccess: '',
                 returnMSG: ''
             }
         },
         computed: {
         },
-        created:function (){
+        created: function () {
+            var that = this;
             this.$nextTick(function () {
+                $(".select2").select2({
+                    placeholder: "选择组",
+                    allowClear: true,
+                    ajax: {
+                        url: this.$store.state.siteUrl+"/allGroup",
+                        dataType: 'json',
+                        delay: 10,
+                        data: function (params) {
+                            return {
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.data,
+                            };
+                        },
+                        cache: true
+                    }
+                });
+                $('select').on('change', function (evt) {
+                    that.groupId= this.value;
+                });
             });
         },
 
@@ -118,6 +153,7 @@
                         name        : this.name,
                         displayName : this.displayName,
                         description : this.description,
+                        groupId     : this.groupId
                     };
                     this.$http.post(this.$store.state.siteUrl+'/addPermission', param).then(function(response){
                         var data = response.data;
@@ -126,6 +162,7 @@
                             this.returnSuccess = 'yes';
                             this.returnMSG = data.msg;
                             this.resetting();
+                            $("select").empty();
                             setTimeout(function () {
                                 that.errors.clear();
                             },10);

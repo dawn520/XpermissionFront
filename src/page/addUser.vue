@@ -133,6 +133,9 @@
 
         },
         created:function (){
+            if(this.$route.params.id){
+                getData(this.$route.params.id);
+            }
             this.$nextTick(function () {
             });
         },
@@ -186,6 +189,28 @@
                 this.email = '';
                 this.password = '';
                 this.password_confirmation = '';
+            },
+            getData:function (id) {
+                var param = {
+                    id:id
+                };
+                this.$http.post(this.$store.state.siteUrl+'/user', param).then(function(response){
+                    var data = response.data;
+                    var that = this;
+                    if(data.code==20000){
+                        this.username = '';
+                        this.name = '';
+                        this.email = '';
+                        this.password = '';
+                        this.password_confirmation = '';
+
+                    }else{
+
+                    }
+                }).catch(function(response) {
+                    this.returnSuccess = 'no';
+                    this.returnMSG = '系统出错，请稍后再试！';
+                });
             }
 
 

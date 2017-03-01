@@ -2,7 +2,7 @@
     <div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>添加角色<small></small></h1>
+            <h1>添加权限组<small></small></h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
@@ -30,7 +30,7 @@
                                     </div>
                                 </transition>
 
-                                <div class="form-group"  v-bind:class="{'has-error': errors.has('name') }">
+                                <div class="form-group"  v-bind:class="{ 'has-error': errors.has('name') }">
                                     <transition enter-active-class="animated shake"
                                                 leave-active-class="xx">
                                         <label class="control-label" v-show="errors.has('name')">
@@ -39,7 +39,7 @@
                                     </transition>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-font"></i></span>
-                                        <input type="text" class="form-control" v-model="name" name="name" v-validate="{ rules: { required: true,alpha_dash:true,min: 4,max:16 } }" data-vv-as="角色名" placeholder="角色名">
+                                        <input type="text" class="form-control" v-model="name" name="name" v-validate="{ rules: { required: true,alpha_dash:true,min: 4,max:16 } }" data-vv-as="组名" placeholder="组名">
                                     </div>
                                 </div>
                                 <div class="form-group"  v-bind:class="{ 'has-error': errors.has('displayName') }">
@@ -51,7 +51,7 @@
                                     </transition>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-text-height"></i></span>
-                                        <input type="text" class="form-control" v-model="displayName" name="displayName" v-validate="{ rules: { required: true,min: 2,max:16 } }" data-vv-as="角色显示名称" placeholder="角色显示名称">
+                                        <input type="text" class="form-control" v-model="displayName" name="displayName" v-validate="{ rules: { required: true,min: 2,max:16 } }" data-vv-as="组显示标题" placeholder="组显示标题">
                                     </div>
                                 </div>
                                 <div class="form-group"  v-bind:class="{ 'has-error': errors.has('description') }">
@@ -66,17 +66,7 @@
                                         <textarea type="text" class="form-control" v-model="description" name="description" v-validate="{ rules: {max:40 } }" data-vv-as="描述" placeholder="描述"></textarea>
                                     </div>
                                 </div>
-                                <h3>附加权限</h3>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-xs-6" v-for="item in allPermissions">
-                                            <label>
-                                                <input type="checkbox" class="minimal" :value="item.id" :id="item.id" v-model="permissionsChecked">
-                                                {{item.display_name}}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -100,19 +90,15 @@
             return {
                 name: '',
                 displayName: '',
-                description: '',
+                description:'',
                 returnSuccess: '',
-                returnMSG: '',
-                allPermissions: [],
-                permissionsChecked:[]
+                returnMSG: ''
             }
         },
         computed: {
         },
         created:function (){
-            var that = this;
             this.$nextTick(function () {
-                this.loadPermission();
             });
         },
 
@@ -132,9 +118,8 @@
                         name        : this.name,
                         displayName : this.displayName,
                         description : this.description,
-                        permissionsChecked : this.permissionsChecked
                     };
-                    this.$http.post(this.$store.state.siteUrl+'/addRole', param).then(function(response){
+                    this.$http.post(this.$store.state.siteUrl+'/addGroup', param).then(function(response){
                         var data = response.data;
                         var that = this;
                         if(data.code==20000){
@@ -144,7 +129,6 @@
                             setTimeout(function () {
                                 that.errors.clear();
                             },10);
-                            $('input').icheck('unchecked');
 
                         }else{
                             this.returnSuccess = 'no';
@@ -163,26 +147,6 @@
                 this.name = '';
                 this.displayName = '';
                 this.description = '';
-                $('input').icheck('unchecked');
-            },
-            loadPermission:function () {
-                    this.$http.get(this.$store.state.siteUrl+'/allPermissions').then(function(response){
-                        var data = response.data;
-                        var that = this;
-                        if(data.code==20000){
-                            that.allPermissions = data.data;
-                            setTimeout(function () {
-                                $('input').icheck({
-                                    checkboxClass: 'icheckbox_square-blue',
-                                    radioClass: 'iradio_square-blue',
-                                    increaseArea: '20%' // optional
-                                });
-                            },1);
-                        }
-                    }).catch(function(response) {
-                        this.returnSuccess = 'no';
-                        this.returnMSG = '系统出错，请稍后再试！';
-                    });
             }
 
 

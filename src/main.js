@@ -6,7 +6,7 @@
 import Velocity from './assets/js/velocity.min';
 window.Velocity = window.velocity = Velocity;
 import './assets/js/velocity.ui';
-import './plugins/iCheck/icheck.min';
+import './plugins/iCheck/icheckv2.min';
 import './plugins/iCheck/square/blue.css'
 import "./assets/css/animate.css";
 
@@ -27,8 +27,19 @@ Vue.use(VeeValidate, {
         zh: {
             messages: messagesZH
         }
-    }
+    },
+    fieldsBagName: 'formFields'
 });
+//vuetable
+import Vuetable from 'vuetable-2/src/components/Vuetable.vue';
+import VuetablePagination from 'vuetable-2/src/components/VuetablePagination.vue';
+import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo.vue';
+import VuetablePaginationDropdown  from 'vuetable-2/src/components/VuetablePaginationDropdown.vue';
+Vue.component('vuetable', Vuetable);
+Vue.component('vuetable-pagination', VuetablePagination);
+Vue.component('vuetable-pagination-info', VuetablePaginationInfo);
+Vue.component('vuetable-pagination-dropdown', VuetablePaginationDropdown);
+
 //实例化路由
 const router=new VueRouter({routes});
 router.beforeEach((to, from, next) => {
