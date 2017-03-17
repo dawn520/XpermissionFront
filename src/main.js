@@ -2,6 +2,8 @@
  * Created by zhouchenxi on 2017/2/3.
  */
 
+//import './plugins/jQuery/jquery-2.2.3.min';
+
 //导入全局动画插件
 import Velocity from './assets/js/velocity.min';
 window.Velocity = window.velocity = Velocity;
@@ -50,7 +52,7 @@ router.beforeEach((to, from, next) => {
 //创建store
 const store = new Vuex.Store({
     state: {
-        siteUrl: 'http://localhost',
+        siteUrl: 'http://yqd.test',
         menu: menu
     },
     mutations: {

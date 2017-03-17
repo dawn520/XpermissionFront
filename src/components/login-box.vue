@@ -125,7 +125,7 @@
                 };
                 this.$http.post(this.$store.state.siteUrl+'/login', param).then(function(response){
                     var data = response.data;
-                    if(data.code==21001){
+                    if(data.code==1){
                         window.location.href = this.$store.state.siteUrl;
                     }else{
                         this.error = true;
