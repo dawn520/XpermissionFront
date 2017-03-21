@@ -6,10 +6,10 @@
 
 //导入全局动画插件
 import Velocity from './assets/js/velocity.min';
-window.Velocity = window.velocity = Velocity;
+window.Velocity  = Velocity;
+window.velocity = Velocity;
+velocity = Velocity;
 import './assets/js/velocity.ui';
-import './plugins/iCheck/icheckv2.min';
-import './plugins/iCheck/square/blue.css'
 import "./assets/css/animate.css";
 
 import Vue from 'vue';
@@ -17,12 +17,17 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import VeeValidate from 'vee-validate';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-default/index.css'
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
 import {routes} from './router';
 import {menu} from './menu';
 import messagesZH from "./assets/js/zh_CN.js";
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueResource);
+Vue.use(ElementUI);
+Vue.use(ServerTable, {}, false,);
 Vue.use(VeeValidate, {
     locale: "zh",
     dictionary: {
@@ -32,15 +37,6 @@ Vue.use(VeeValidate, {
     },
     fieldsBagName: 'formFields'
 });
-//vuetable
-import Vuetable from 'vuetable-2/src/components/Vuetable.vue';
-import VuetablePagination from 'vuetable-2/src/components/VuetablePagination.vue';
-import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo.vue';
-import VuetablePaginationDropdown  from 'vuetable-2/src/components/VuetablePaginationDropdown.vue';
-Vue.component('vuetable', Vuetable);
-Vue.component('vuetable-pagination', VuetablePagination);
-Vue.component('vuetable-pagination-info', VuetablePaginationInfo);
-Vue.component('vuetable-pagination-dropdown', VuetablePaginationDropdown);
 
 //实例化路由
 const router=new VueRouter({routes});
@@ -52,8 +48,20 @@ router.beforeEach((to, from, next) => {
 //创建store
 const store = new Vuex.Store({
     state: {
-        siteUrl: 'http://yqd.test',
-        menu: menu
+        siteUrl: 'http://manage.myyqd.com',
+        menu: menu,
+        tableTexts:{
+            count:'显示第 {from} 至 {to} 项结果，共 {count} 项 ',
+            filter:'搜索:',
+            filterPlaceholder:'搜一搜吧',
+            limit:'每页显示条数:',
+            noResults:'没有搜索到结果',
+            page:'页码:', // for dropdown pagination
+            filterBy: '通过 {column} 过滤', // Placeholder for search fields when filtering by column
+            loading:'读取中...', // First request to server
+            defaultOption:'选择 {column}' // default option for list filters
+        },
+        tableDefaultPerPage:10
     },
     mutations: {
         changeMenu:function (state,payload) {

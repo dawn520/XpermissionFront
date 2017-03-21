@@ -69,12 +69,11 @@
                                 <h3>附加权限</h3>
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-xs-6" v-for="item in allPermissions">
-                                            <label>
-                                                <input type="checkbox" class="minimal" :value="item.id" :id="item.id" v-model="permissionsChecked">
-                                                {{item.display_name}}
-                                            </label>
-                                        </div>
+                                        <el-checkbox-group v-model="permissionsChecked">
+                                            <div class="col-xs-6" v-for="item in allPermissions">
+                                                <el-checkbox :label="item.id">{{item.display_name}}</el-checkbox>
+                                            </div>
+                                        </el-checkbox-group>
                                     </div>
                                 </div>
                             </div>
@@ -137,20 +136,18 @@
                     this.$http.post(this.$store.state.siteUrl+'/addRole', param).then(function(response){
                         var data = response.data;
                         var that = this;
-                        if(data.code==20000){
+                        if(data.code==200){
                             this.returnSuccess = 'yes';
-                            this.returnMSG = data.msg;
+                            this.returnMSG = data.message;
                             this.resetting();
                             setTimeout(function () {
                                 that.errors.clear();
                             },10);
-                            $('input').icheck('unchecked');
-
                         }else{
                             this.returnSuccess = 'no';
-                            this.returnMSG = data.msg;
-                            for(var key in data.msg){
-                                this.errors.errors.unshift({field:key,msg:data.msg[key][0],scope:"__global__"})
+                            this.returnMSG = data.message;
+                            for(var key in data.message){
+                                this.errors.errors.unshift({field:key,msg:data.message[key][0],scope:"__global__"})
                             }
                         }
                     }).catch(function(response) {
@@ -163,21 +160,14 @@
                 this.name = '';
                 this.displayName = '';
                 this.description = '';
-                $('input').icheck('unchecked');
+                this.permissionsChecked = []
             },
             loadPermission:function () {
                     this.$http.get(this.$store.state.siteUrl+'/allPermissions').then(function(response){
                         var data = response.data;
                         var that = this;
-                        if(data.code==20000){
+                        if(data.code==200){
                             that.allPermissions = data.data;
-                            setTimeout(function () {
-                                $('input').icheck({
-                                    checkboxClass: 'icheckbox_square-blue',
-                                    radioClass: 'iradio_square-blue',
-                                    increaseArea: '20%' // optional
-                                });
-                            },1);
                         }
                     }).catch(function(response) {
                         this.returnSuccess = 'no';

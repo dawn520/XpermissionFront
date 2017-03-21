@@ -26,21 +26,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="permissionTable" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>组名</th>
-                                    <th>组显示标题</th>
-                                    <th>描述</th>
-                                    <th>创建时间</th>
-                                    <th>修改时间</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                            <v-server-table :url="url" :columns="columns" :options="options"></v-server-table>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -58,8 +44,22 @@
     export default {
         data:function () {
             return {
-                title: '首页',
-                smallTitle: '这里是首页',
+                url:this.$store.state.siteUrl+'/groupList',
+                columns:['id','name','display_name','description','created_at','updated_at'],
+                options: {
+                    headings: {
+                        id:'ID',
+                        name: '组名',
+                        display_name: '组显示标题',
+                        description: '描述',
+                        created_at: '创建时间',
+                        updated_at: '修改时间'
+                    },
+                    perPage:5,
+                    perPageValues:[1,2,3,4],
+                    texts:this.$store.state.tableTexts
+                },
+
             }
         },
         computed: {
@@ -68,80 +68,7 @@
         created:function (){
             var that = this ;
             this.$nextTick(function () {
-                $("#permissionTable").dataTable({
-                    "bStateSave": true,
-                    "autoWidth": false,
-                    "processing": true,
-                    "serverSide": true,
-                    "ajax": {
-                        'url':that.$store.state.siteUrl+'/groupList',
-                        'type':'get',
-                        'dataType':'json',
-                       // 'dataSrc':function (data) {
-                            //return data.data.data;
-                       // }
-                    },
 
-                    "columns": [
-                        { "data": "id"},
-                        { "data": "name","orderable": true},
-                        { "data": "display_name","orderable": false},
-                        { "data": "description","orderable": false},
-                        { "data": "created_at"},
-                        { "data": "updated_at"}
-                    ],
-
-                    "lengthMenu": [
-                        [5, 10, 20, -1],
-                        [5, 10, 20, "All"] // change per page values here
-
-                    ],
-                    // set the initial value
-                   // "displayLength": 5,
-                    "pageLength": 5,
-                   // "pagingType": "bootstrap_full_number",
-//                    "columnDefs": [{  // set default column settings
-//                        'orderable': false,
-//                        'targets': [0]
-//                    }, {
-//                        "searchable": false,
-//                        "targets": [0]
-//                    }],
-//                    // "scrollX": true,
-//
-                    "order": [
-                        [1, "asc"]
-                    ], // set first column as a default sort by asc
-//
-//                    "stripeClasses":
-//                            ['gradeX odd', '"gradeX even"']
-//                    ,
-                    "language": {
-                        "sProcessing": '处理中……',
-                        "sLengthMenu": "显示 _MENU_ 项结果",
-                        "sZeroRecords": "没有匹配结果",
-                        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                        "sInfoPostFix": "",
-                        "sSearch": "搜索:",
-                        "sUrl": "",
-                        "sEmptyTable": "表中数据为空!",
-                        "sLoadingRecords": "载入中...",
-                        "sInfoThousands": ",",
-                        "oPaginate": {
-                            "sFirst": "首页",
-                            "sPrevious": "上页",
-                            "sNext": "下页",
-                            "sLast": "末页"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": 以升序排列此列",
-                            "sSortDescending": ": 以降序排列此列"
-                        }
-                    },
-
-                });
             });
         },
 

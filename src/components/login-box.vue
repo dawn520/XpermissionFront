@@ -8,6 +8,8 @@
             <p class="login-box-msg">登录</p>
             <transition enter-active-class="animated tada"
                         leave-active-class="animated bounceOutRight">
+
+
                 <div class="alert alert-warning alert-dismissible" v-if="error">
                     <button type="button" class="close" @click="error=false" aria-hidden="false">×</button>
                     {{errorMSG}}
@@ -21,7 +23,7 @@
                             <i class="fa fa-times-circle-o"></i> 用户名不能为空！
                         </label>
                     </transition>
-                    <input type="email" class="form-control" v-model="username" placeholder="用户名">
+                    <el-input type="email" popper-class="form-control" v-model="username" placeholder="用户名"></el-input>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback" v-bind:class="{ 'has-error': passwordError }">
@@ -31,20 +33,20 @@
                             <i class="fa fa-times-circle-o"></i> 密码不能为空！
                         </label>
                     </transition>
-                    <input type="password" class="form-control" v-model="password" placeholder="密码">
+                    <el-input type="password" popper-class="form-control" v-model="password" placeholder="密码"></el-input>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> 记住我
+                                <el-checkbox v-model="checked">记住我</el-checkbox>
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="button" class="btn btn-primary btn-block btn-flat" @click="login">登录</button>
+                        <el-button type="primary" @click="login"> 登录</el-button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -77,7 +79,8 @@
                 usernameError:false,
                 passwordError:false,
                 error:false,
-                errorMSG:''
+                errorMSG:'',
+                checked:''
             }
         },
         created:function (){
@@ -125,11 +128,11 @@
                 };
                 this.$http.post(this.$store.state.siteUrl+'/login', param).then(function(response){
                     var data = response.data;
-                    if(data.code==1){
+                    if(data.code==200){
                         window.location.href = this.$store.state.siteUrl;
                     }else{
                         this.error = true;
-                        this.errorMSG = data.msg;
+                        this.errorMSG = data.message;
                     }
                 }).catch(function(response) {
                     this.error = true;

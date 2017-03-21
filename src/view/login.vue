@@ -27,13 +27,6 @@
         created:function (){
             this.$nextTick(function () {
                 $('body').attr('class','hold-transition login-page');
-                $(function () {
-                    $('input').icheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue',
-                        increaseArea: '20%' // optional
-                    });
-                });
             });
         },
  //       beforeRouteEnter:function(to, from, next) {

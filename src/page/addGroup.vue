@@ -110,7 +110,7 @@
         methods: {
             add:function () {
                 this.$validator.validateAll().then(success => {
-                    if (! success) {
+                    if (!success) {
                         // handle error
                         return;
                     }
@@ -122,9 +122,9 @@
                     this.$http.post(this.$store.state.siteUrl+'/addGroup', param).then(function(response){
                         var data = response.data;
                         var that = this;
-                        if(data.code==20000){
+                        if(data.code==200){
                             this.returnSuccess = 'yes';
-                            this.returnMSG = data.msg;
+                            this.returnMSG = data.message;
                             this.resetting();
                             setTimeout(function () {
                                 that.errors.clear();
@@ -132,9 +132,9 @@
 
                         }else{
                             this.returnSuccess = 'no';
-                            this.returnMSG = data.msg;
-                            for(var key in data.msg){
-                                this.errors.errors.unshift({field:key,msg:data.msg[key][0],scope:"__global__"})
+                            this.returnMSG = data.message;
+                            for(var key in data.message){
+                                this.errors.errors.unshift({field:key,msg:data.message[key][0],scope:"__global__"})
                             }
                         }
                     }).catch(function(response) {

@@ -73,9 +73,25 @@
                                             <i class="fa fa-times-circle-o"></i> {{ errors.first('groupId') }}
                                         </label>
                                     </transition>
-                                    <select class="form-control select2" style="width: 100%;" v-model="groupId" name="groupId" v-validate="{ rules: {required: true } }" data-vv-as="组">
-                                        <option></option>
-                                    </select>
+
+                                        <el-select style="width: 100%"
+                                                   :class="form-control"
+                                                   v-model="groupId"
+                                                   filterable
+                                                   @change="getGroupId"
+                                                   placeholder="请选择"
+                                                   name="groupId"
+                                                   v-validate="{ rules: {required: true } }"
+                                                   data-vv-as="组">
+                                            <el-option
+                                                    v-for="item in groups"
+                                                    :key="item.id"
+                                                    :label="item.text"
+                                                    :value="item.id">
+                                            </el-option>
+                                        </el-select>
+
+
                                 </div>
 
                             </div>
@@ -104,36 +120,16 @@
                 description:'',
                 groupId : '',
                 returnSuccess: '',
-                returnMSG: ''
+                returnMSG: '',
+                groups:[]
             }
         },
         computed: {
         },
         created: function () {
             var that = this;
+            this.getGroups();
             this.$nextTick(function () {
-                $(".select2").select2({
-                    placeholder: "选择组",
-                    allowClear: true,
-                    ajax: {
-                        url: this.$store.state.siteUrl+"/allGroup",
-                        dataType: 'json',
-                        delay: 10,
-                        data: function (params) {
-                            return {
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: data.data,
-                            };
-                        },
-                        cache: true
-                    }
-                });
-                $('select').on('change', function (evt) {
-                    that.groupId= this.value;
-                });
             });
         },
 
@@ -158,20 +154,19 @@
                     this.$http.post(this.$store.state.siteUrl+'/addPermission', param).then(function(response){
                         var data = response.data;
                         var that = this;
-                        if(data.code==20000){
+                        if(data.code==200){
                             this.returnSuccess = 'yes';
-                            this.returnMSG = data.msg;
+                            this.returnMSG = data.message;
                             this.resetting();
-                            $("select").empty();
                             setTimeout(function () {
                                 that.errors.clear();
                             },10);
 
                         }else{
                             this.returnSuccess = 'no';
-                            this.returnMSG = data.msg;
-                            for(var key in data.msg){
-                                this.errors.errors.unshift({field:key,msg:data.msg[key][0],scope:"__global__"})
+                            this.returnMSG = data.message;
+                            for(var key in data.message){
+                                this.errors.errors.unshift({field:key,msg:data.message[key][0],scope:"__global__"})
                             }
                         }
                     }).catch(function(response) {
@@ -184,9 +179,20 @@
                 this.name = '';
                 this.displayName = '';
                 this.description = '';
-            }
-
-
+                this.groupId = '';
+            },
+            getGroups:function () {
+                this.$http.get(this.$store.state.siteUrl + '/allGroup').then(function (response) {
+                    var data = response.data;
+                    var that = this;
+                    if (data.code == 200) {
+                        that.groups = data.data;
+                    }
+                }).catch(function (response) {
+                    this.returnSuccess = 'no';
+                    this.returnMSG = '系统出错，请稍后再试！';
+                });
+            },
         },
         components: {
 
